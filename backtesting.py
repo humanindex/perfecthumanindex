@@ -246,9 +246,9 @@ def main():
 
     # 탭 선택
     st.sidebar.title("Insights")
-    selected_tab = st.sidebar.radio("Select Tab", ["Crypto Strategy Right Now", "Human Index"])
+    selected_tab = st.sidebar.radio("Select Tab", ["[Step1] Check Crypto", "[Step2] Guess Up/Down", "[Step3] Results"])
 
-    if selected_tab == "Crypto Strategy Right Now":
+    if selected_tab == "[Step1] Check Crypto":
         st.title("Crypto Strategy Now")
         # 코인 선택
         selected_ticker = st.selectbox("Select a cryptocurrency", tickers)
@@ -275,8 +275,14 @@ def main():
         st.pyplot(fig)
         plt.close(fig)
         bullish_or_bearish()
-    elif selected_tab == "Human Index":
-        st.title("Human Index")
+        
+    elif selected_tab == "[Step2] Guess Up/Down":
+        st.title("Guess Up/Down")
+        url = "https://www.example.com"
+        st.markdown(f"[Click here to vote]({url})")
+        
+    elif selected_tab == "[Step3] Results":
+        st.title("Human Index\n(0:Bearish, 1:Bullish)")
         spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
         range_name = "sheet1"
         creds = authenticate_google_sheets()
@@ -390,8 +396,8 @@ def main():
         print("일반인간지표(0:하락, 1:상승):",general_human_index_rounded)
         print("가중인간지표(0:하락, 1:상승):",perfect_human_index_rounded)
         
-        st.text(f"General Human Index \n(0: Bearish, 1: Bullish): {general_human_index_rounded}")
-        st.text(f"Perfect Human Index \n(0: Bearish, 1: Bullish): {perfect_human_index_rounded}")
+        st.text(f"General : {general_human_index_rounded}")
+        st.text(f"Weighted: {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
 if __name__ == '__main__':
     main()
