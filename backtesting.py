@@ -15,7 +15,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from urllib.parse import urlparse, parse_qs
-
+import json
 
 # In[2]:
 
@@ -186,6 +186,7 @@ def authenticate_google_sheets():
         code = parse_qs(parsed_url.query)['code'][0]
         creds = flow.fetch_token(code=code)
         st.write(dir(creds))
+        st.write(creds)
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
