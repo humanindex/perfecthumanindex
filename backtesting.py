@@ -161,27 +161,29 @@ def fetch_data(selected_ticker, start_date, end_date):
 
 
 def authenticate_google_sheets():
-
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
+
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
+
     if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                "client_secret_998298439835-cu0ba8q3bij8opv1asuslv7vdetj3qn8.apps.googleusercontent.com.json", SCOPES
-            )
-            creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
+        st.markdown("### Authenticate with Google")
+        st.markdown("Click the link below to authenticate with Google:")
+        
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "client_secret_998298439835-cu0ba8q3bij8opv1asuslv7vdetj3qn8.apps.googleusercontent.com.json", SCOPES
+        )
+        auth_url, _ = flow.authorization_url(prompt='consent')
+        st.markdown(f"[Click here to authenticate with Google]({auth_url})")
+        
+        response = st.text_input("https://perfecthumanindex.streamlit.app/")
+        creds = flow.fetch_token(authorization_response=response)
+
         with open("token.json", "w") as token:
             token.write(creds.to_json())
-    return creds 
+
+    return creds
 
 
 # In[10]:
