@@ -185,7 +185,7 @@ def authenticate_google_sheets():
         parsed_url = urlparse(response_url)
         code = parse_qs(parsed_url.query)['code'][0]
         creds = flow.fetch_token(code=code)
-        print(dir(creds))
+        st.write(dir(creds))
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
