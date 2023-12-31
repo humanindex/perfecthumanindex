@@ -249,7 +249,7 @@ def main():
     selected_tab = st.sidebar.radio("How to do", ["[Step1] Check Crypto", "[Step2] Guess Up/Down", "[Step3] Results"])
 
     if selected_tab == "[Step1] Check Crypto":
-        st.title("Crypto Strategy Now")
+        st.title("Crypto Now")
         # 코인 선택
         selected_ticker = st.selectbox("Select a cryptocurrency", tickers)
 
@@ -402,9 +402,9 @@ def main():
         st.text(f"Number of Participants: {total_forecast_num}")
         
     # 탭 선택
-    st.sidebar.title("Human Index2")
-    selected_tab = st.sidebar.radio("How to do2", ["[Step1] Check Crypto2", "[Step2] Guess Up/Down2", "[Step3] Results2"])
-
+    st.sidebar.title("AI Trading")
+    selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
+  #      if selected_tab == "[Step1] Check Crypto":
 if __name__ == '__main__':
     main()
 
