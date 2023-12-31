@@ -165,8 +165,6 @@ def authenticate_google_sheets():
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
 
-    f
-
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
 
