@@ -397,19 +397,20 @@ def main():
         print("일반인간지표(0:하락, 1:상승):",general_human_index_rounded)
         print("가중인간지표(0:하락, 1:상승):",perfect_human_index_rounded)
         
-        st.text("What is Ensemble?")
-        st.text("Ensemble modeling is a process where multiple diverse models are created to predict an outcome, either by using many different modeling algorithms or using different training data sets. The ensemble model then aggregates the prediction of each base model and results in once final prediction for the unseen data.")
-        # 로컬 파일 경로 사용 예제
-        image_path = "ensemble.png"
-        st.image(image_path, caption='Your Image Caption', use_column_width=True)
+        st.text(f"General : {general_human_index_rounded}")
+        st.text(f"Weighted: {perfect_human_index_rounded}")
+        st.text(f"Number of Participants: {total_forecast_num}")
+  
 
     # 탭 선택
     st.sidebar.title("AI Trading")
     selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
     if selected_tab == "Introduction":
-        st.text(f"General : {general_human_index_rounded}")
-        st.text(f"Weighted: {perfect_human_index_rounded}")
-        st.text(f"Number of Participants: {total_forecast_num}")
+        st.text("What is Ensemble?")
+        st.text("Ensemble modeling is a process where multiple diverse models are created to predict an outcome, either by using many different modeling algorithms or using different training data sets. The ensemble model then aggregates the prediction of each base model and results in once final prediction for the unseen data.")
+        # 로컬 파일 경로 사용 예제
+        image_path = "ensemble.png"
+        st.image(image_path, caption='Your Image Caption', use_column_width=True)
 if __name__ == '__main__':
     main()
 
