@@ -401,9 +401,9 @@ def main():
         st.text(f"Weighted: {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
         
-    # 탭 선택
-    st.sidebar.title("Human Index2")
-    selected_tab = st.sidebar.radio("How to do2", ["[Step1] Check Crypto2", "[Step2] Guess Up/Down2", "[Step3] Results2"])
+#     # 탭 선택
+#     st.sidebar.title("Human Index2")
+#     selected_tab = st.sidebar.radio("How to do2", ["[Step1] Check Crypto2", "[Step2] Guess Up/Down2", "[Step3] Results2"])
 
 if __name__ == '__main__':
     main()
