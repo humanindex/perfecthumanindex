@@ -170,15 +170,15 @@ def authenticate_google_sheets():
     if not creds or not creds.valid:
         st.markdown("### Authenticate with Google")
         st.markdown("Click the link below to authenticate with Google:")
-        
+
         flow = InstalledAppFlow.from_client_secrets_file(
-            "client_secret_998298439835-cu0ba8q3bij8opv1asuslv7vdetj3qn8.apps.googleusercontent.com.json", 
-            SCOPES,
+            "client_secret_998298439835-uv6ts5ta7agdj0fch4rtr6pf96su0mef.apps.googleusercontent.com.json",
+            scopes=SCOPES,
             redirect_uri="https://perfecthumanindex.streamlit.app/"
         )
         auth_url, _ = flow.authorization_url(prompt='consent')
         st.markdown(f"[Click here to authenticate with Google]({auth_url})")
-        
+
         response = st.text_input("https://perfecthumanindex.streamlit.app/")
         creds = flow.fetch_token(authorization_response=response)
 
@@ -647,6 +647,7 @@ if __name__ == '__main__':
 
 
 # In[ ]:
+
 
 
 
