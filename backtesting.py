@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[55]:
+# In[67]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[56]:
+# In[68]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[57]:
+# In[69]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[58]:
+# In[70]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[59]:
+# In[71]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Click Time: {now}")
 
 
-# In[60]:
+# In[72]:
 
 
 # Your trading strategy function
@@ -108,7 +108,7 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[61]:
+# In[73]:
 
 
 # #HPR(기간수익률) 계산 함수
@@ -118,7 +118,7 @@ def ma5_above_and_range_above_strategy(df):
 #     return hpr
 
 
-# In[62]:
+# In[74]:
 
 
 # 그래프 생성 함수
@@ -143,7 +143,7 @@ def generate_plot(df, ticker):
     return fig
 
 
-# In[63]:
+# In[75]:
 
 
 #fetch_data
@@ -153,7 +153,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[64]:
+# In[76]:
 
 
 def authenticate_google_sheets():
@@ -190,7 +190,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[65]:
+# In[77]:
 
 
 def get_bitcoin_price_difference():
@@ -400,17 +400,12 @@ def main():
         st.text(f"General : {general_human_index_rounded}")
         st.text(f"Weighted: {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
-  
-
-     # 탭 선택
-#     st.sidebar.title("AI Trading")
-#     selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
-#     if selected_tab == "Introduction":
-#         st.text("What is Ensemble?")
-#         st.text("Ensemble modeling is a process where multiple diverse models are created to predict an outcome, either by using many different modeling algorithms or using different training data sets. The ensemble model then aggregates the prediction of each base model and results in once final prediction for the unseen data.")
-#         # 로컬 파일 경로 사용 예제
-#         image_path = "ensemble.png"
-#         st.image(image_path, caption='Your Image Caption', use_column_width=True)
+        
+    # 탭 선택
+    st.sidebar.title("AI Trading")
+    selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
+        if selected_tab == "Introduction":
+            
 if __name__ == '__main__':
     main()
 
