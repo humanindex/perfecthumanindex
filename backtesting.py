@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-import json
+
 
 import streamlit as st
 import pyupbit
@@ -185,22 +185,9 @@ def authenticate_google_sheets():
         parsed_url = urlparse(response_url)
         code = parse_qs(parsed_url.query)['code'][0]
         creds = flow.fetch_token(code=code)
-        # creds 객체에서 필요한 속성을 추출
-        credentials_dict = {
-            'token': creds.token,
-            'refresh_token': creds.refresh_token,
-            'token_uri': creds.token_uri,
-            'client_id': creds.client_id,
-            'client_secret': creds.client_secret,
-            'scopes': creds.scopes
-        }
-
-        # JSON 형식으로 변환하여 파일에 저장
-        with open("token.json", "w") as token_file:
-            json.dump(credentials_dict, token_file)
-
-        # with open("token.json", "w") as token:
-        #     token.write(creds.to_json())
+        print(creds.to_json())
+        with open("token.json", "w") as token:
+            token.write(creds.to_json())
 
     return creds
 
