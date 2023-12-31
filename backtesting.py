@@ -172,7 +172,9 @@ def authenticate_google_sheets():
         st.markdown("Click the link below to authenticate with Google:")
         
         flow = InstalledAppFlow.from_client_secrets_file(
-            "client_secret_998298439835-cu0ba8q3bij8opv1asuslv7vdetj3qn8.apps.googleusercontent.com.json", SCOPES
+            "client_secret_998298439835-cu0ba8q3bij8opv1asuslv7vdetj3qn8.apps.googleusercontent.com.json", 
+            SCOPES,
+            redirect_uri="https://perfecthumanindex.streamlit.app/"
         )
         auth_url, _ = flow.authorization_url(prompt='consent')
         st.markdown(f"[Click here to authenticate with Google]({auth_url})")
