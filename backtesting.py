@@ -245,8 +245,8 @@ def main():
     tickers = pyupbit.get_tickers()
 
     # 탭 선택
-    st.sidebar.title("Human Index\nHow to do")
-    selected_tab = st.sidebar.radio(["[Step1] Check Crypto", "[Step2] Guess Up/Down", "[Step3] See Results"])
+    st.sidebar.title("Human Index")
+    selected_tab = st.sidebar.radio("How to do", ["[Step1] Check Crypto", "[Step2] Guess Up/Down", "[Step3] Results"])
 
     if selected_tab == "[Step1] Check Crypto":
         st.title("Crypto Strategy Now")
@@ -263,7 +263,7 @@ def main():
         # 전략 적용
         df = ma5_above_and_range_above_strategy(df)
 
-        # HPR 계산
+        # MDD, HPR 계산
         hpr = calculate_metrics(df)
 
         # 결과 출력
@@ -281,7 +281,7 @@ def main():
         url = "https://www.example.com"
         st.markdown(f"[Click here to vote]({url})")
         
-    elif selected_tab == "[Step3] See Results":
+    elif selected_tab == "[Step3] Results":
         st.title("Human Index\n(0:Bearish, 1:Bullish)")
         spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
         range_name = "sheet1"
