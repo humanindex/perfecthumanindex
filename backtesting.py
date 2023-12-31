@@ -187,7 +187,7 @@ def authenticate_google_sheets():
             
             # Specify the browser to use (replace 'your_browser_command' with the appropriate command)
             browser_command = 'chrome'
-            webbrowser.get(browser_command).open(auth_url, new=1, autoraise=True)
+            webbrowser.open(auth_url, new=1, autoraise=True)
 
             # Get the authorization response from the user
             response_code = input("Enter the authorization code: ")
