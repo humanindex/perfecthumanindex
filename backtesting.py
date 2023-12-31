@@ -165,8 +165,8 @@ def authenticate_google_sheets():
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
 
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    #if os.path.exists("token.json"):
+    #    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
 
     if not creds or not creds.valid:
         st.markdown("### Authenticate with Google")
@@ -187,6 +187,7 @@ def authenticate_google_sheets():
         creds = flow.fetch_token(code=code)
         st.write(dir(creds))
         st.write(creds)
+        st.write
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
