@@ -134,11 +134,11 @@ def generate_plot(df, ticker):
     ax1.tick_params('y', colors='tab:blue')
     ax1.legend(loc='upper left')
 
-    ax2 = ax1.twinx()
-    ax2.plot(close_prices.index, hpr, label='hpr', marker='o', linestyle='--', color='tab:red')
-    ax2.set_ylabel('hpr', color='tab:red')
-    ax2.tick_params('y', colors='tab:red')
-    ax2.legend(loc='upper right')
+#     ax2 = ax1.twinx()
+#     ax2.plot(close_prices.index, hpr, label='hpr', marker='o', linestyle='--', color='tab:red')
+#     ax2.set_ylabel('hpr', color='tab:red')
+#     ax2.tick_params('y', colors='tab:red')
+#     ax2.legend(loc='upper right')
 
     return fig
 
@@ -264,17 +264,17 @@ def main():
         df = ma5_above_and_range_above_strategy(df)
 
         # MDD, HPR 계산
-        hpr = calculate_metrics(df)
+        #hpr = calculate_metrics(df)
 
         # 결과 출력
         st.write(f"Selected Coin: {selected_ticker}")
-        st.write(f"HPR (Holding Period Return): {hpr:.2f}")
+        #st.write(f"HPR (Holding Period Return): {hpr:.2f}")
         
         # 그래프 결과 출력
         fig = generate_plot(df, selected_ticker)
         st.pyplot(fig)
         plt.close(fig)
-        bullish_or_bearish()
+        #bullish_or_bearish()
         
     elif selected_tab == "[Step2] Guess Up/Down":
         st.title("Guess Up/Down")
@@ -282,7 +282,7 @@ def main():
         st.markdown(f"[Click here to vote]({url})")
         
     elif selected_tab == "[Step3] Results":
-        st.title("Human Index")
+        st.title("Human Index Results")
         st.text("(Up:1, Down:0)")
         spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
         range_name = "sheet1"
@@ -400,6 +400,11 @@ def main():
         st.text(f"General : {general_human_index_rounded}")
         st.text(f"Weighted: {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
+        
+    # 탭 선택
+    st.sidebar.title("Human Index2")
+    selected_tab = st.sidebar.radio("How to do2", ["[Step1] Check Crypto2", "[Step2] Guess Up/Down2", "[Step3] Results2"])
+
 if __name__ == '__main__':
     main()
 
