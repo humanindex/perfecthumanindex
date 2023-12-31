@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-
+import json
 
 import streamlit as st
 import pyupbit
@@ -15,7 +15,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from urllib.parse import urlparse, parse_qs
-import json
+
 
 # In[2]:
 
@@ -165,8 +165,8 @@ def authenticate_google_sheets():
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
 
-    #if os.path.exists("token.json"):
-    #    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
 
     if not creds or not creds.valid:
         st.markdown("### Authenticate with Google")
@@ -185,11 +185,13 @@ def authenticate_google_sheets():
         parsed_url = urlparse(response_url)
         code = parse_qs(parsed_url.query)['code'][0]
         creds = flow.fetch_token(code=code)
-        st.write(dir(creds))
-        st.write(creds)
-        st.write
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
+
+
+        # with open("token.json", "w") as token:
+        #     token.write(creds.to_json())
+        # JSON 형식으로 변환하여 파일에 저장
+        with open("token.json", "w") as token_file:
+            json.dump(creds, token_file)
 
     return creds
 
