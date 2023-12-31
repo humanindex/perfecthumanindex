@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[16]:
+# In[43]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[17]:
+# In[44]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[18]:
+# In[45]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[19]:
+# In[46]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[20]:
+# In[47]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Click Time: {now}")
 
 
-# In[21]:
+# In[48]:
 
 
 # Your trading strategy function
@@ -108,23 +108,23 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[22]:
+# In[49]:
 
 
-#HPR(기간수익률) 계산 함수
-def calculate_metrics(df):
-    df['hpr'] = df['ror'].cumprod()
-    hpr = df['hpr'].iloc[-1]
-    return hpr
+# #HPR(기간수익률) 계산 함수
+# def calculate_metrics(df):
+#     df['hpr'] = df['ror'].cumprod()
+#     hpr = df['hpr'].iloc[-1]
+#     return hpr
 
 
-# In[23]:
+# In[50]:
 
 
 # 그래프 생성 함수
 def generate_plot(df, ticker):
     close_prices = df["close"]
-    hpr = df["hpr"]
+    #hpr = df["hpr"]
 
     # 시계열 그래프 그리기
     fig, ax1 = plt.subplots(figsize=(10, 5))
@@ -143,7 +143,7 @@ def generate_plot(df, ticker):
     return fig
 
 
-# In[24]:
+# In[51]:
 
 
 #fetch_data
@@ -153,7 +153,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[25]:
+# In[52]:
 
 
 def authenticate_google_sheets():
@@ -190,7 +190,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[26]:
+# In[53]:
 
 
 def get_bitcoin_price_difference():
