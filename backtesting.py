@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[43]:
+# In[55]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[44]:
+# In[56]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[45]:
+# In[57]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[46]:
+# In[58]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[47]:
+# In[59]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Click Time: {now}")
 
 
-# In[48]:
+# In[60]:
 
 
 # Your trading strategy function
@@ -108,7 +108,7 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[49]:
+# In[61]:
 
 
 # #HPR(기간수익률) 계산 함수
@@ -118,7 +118,7 @@ def ma5_above_and_range_above_strategy(df):
 #     return hpr
 
 
-# In[50]:
+# In[62]:
 
 
 # 그래프 생성 함수
@@ -143,7 +143,7 @@ def generate_plot(df, ticker):
     return fig
 
 
-# In[51]:
+# In[63]:
 
 
 #fetch_data
@@ -153,7 +153,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[52]:
+# In[64]:
 
 
 def authenticate_google_sheets():
@@ -190,7 +190,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[53]:
+# In[65]:
 
 
 def get_bitcoin_price_difference():
@@ -406,10 +406,10 @@ def main():
     # 탭 선택
     st.sidebar.title("AI Trading")
     selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
-        if selected_tab == "Introduction":
-            st.text(f"General : {general_human_index_rounded}")
-            st.text(f"Weighted: {perfect_human_index_rounded}")
-            st.text(f"Number of Participants: {total_forecast_num}")
+    if selected_tab == "Introduction":
+        st.text(f"General : {general_human_index_rounded}")
+        st.text(f"Weighted: {perfect_human_index_rounded}")
+        st.text(f"Number of Participants: {total_forecast_num}")
 if __name__ == '__main__':
     main()
 
