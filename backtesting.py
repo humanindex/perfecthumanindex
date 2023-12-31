@@ -282,7 +282,8 @@ def main():
         st.markdown(f"[Click here to vote]({url})")
         
     elif selected_tab == "[Step3] Results":
-        st.title("Human Index\n [0:Bearish, 1:Bullish]")
+        st.title("Human Index")
+        st.text("(Up:1, Down:0)")
         spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
         range_name = "sheet1"
         creds = authenticate_google_sheets()
