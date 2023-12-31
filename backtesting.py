@@ -19,6 +19,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import time
+import webbrowser
 
 
 # In[2]:
@@ -166,14 +167,14 @@ def fetch_data(selected_ticker, start_date, end_date):
 
 
 def authenticate_google_sheets():
-
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
+
+    # The file token.json stores the user's access and refresh tokens and is
+    # created automatically when the authorization flow completes for the first time.
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -182,11 +183,21 @@ def authenticate_google_sheets():
             flow = InstalledAppFlow.from_client_secrets_file(
                 "client_secret_998298439835-uv6ts5ta7agdj0fch4rtr6pf96su0mef.apps.googleusercontent.com.json", SCOPES
             )
-            creds = flow.run_local_server(port=0)
+            auth_url, _ = flow.authorization_url(prompt="consent")
+            
+            # Specify the browser to use (replace 'your_browser_command' with the appropriate command)
+            browser_command = 'chrome'
+            webbrowser.get(browser_command).open(auth_url, new=1, autoraise=True)
+
+            # Get the authorization response from the user
+            response_code = input("Enter the authorization code: ")
+            creds = flow.fetch_token(code=response_code)
+            
         # Save the credentials for the next run
         with open("token.json", "w") as token:
             token.write(creds.to_json())
-    return creds 
+
+    return creds
 
 
 # In[10]:
