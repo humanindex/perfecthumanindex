@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[2]:
+# In[ ]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[2]:
+# In[15]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[3]:
+# In[16]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[4]:
+# In[17]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Click Time: {now}")
 
 
-# In[5]:
+# In[18]:
 
 
 # Your trading strategy function
@@ -108,7 +108,7 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[6]:
+# In[19]:
 
 
 # MDD(최대가격 대비 낙폭), HPR(기간수익률) 계산 함수
@@ -120,7 +120,7 @@ def calculate_metrics(df):
     return mdd, hpr
 
 
-# In[7]:
+# In[20]:
 
 
 # 그래프 생성 함수
@@ -153,7 +153,7 @@ def generate_plot(df, ticker):
     return fig
 
 
-# In[8]:
+# In[21]:
 
 
 #fetch_data
@@ -163,7 +163,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[9]:
+# In[22]:
 
 
 def authenticate_google_sheets():
@@ -200,7 +200,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[10]:
+# In[23]:
 
 
 def get_bitcoin_price_difference():
@@ -229,7 +229,7 @@ def get_bitcoin_price_difference():
     return result
 
 
-# In[11]:
+# In[24]:
 
 
 spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
@@ -246,7 +246,7 @@ df = pd.DataFrame(values)
 print(df)
 
 
-# In[12]:
+# In[ ]:
 
 
 # Streamlit 애플리케이션
