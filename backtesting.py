@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[16]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[ ]:
+# In[17]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[15]:
+# In[18]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[16]:
+# In[19]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[17]:
+# In[20]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Click Time: {now}")
 
 
-# In[18]:
+# In[21]:
 
 
 # Your trading strategy function
@@ -108,26 +108,23 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[19]:
+# In[22]:
 
 
-# MDD(최대가격 대비 낙폭), HPR(기간수익률) 계산 함수
+#HPR(기간수익률) 계산 함수
 def calculate_metrics(df):
     df['hpr'] = df['ror'].cumprod()
-    df['dd'] = (df['hpr'].cummax() - df['hpr']) / df['hpr'].cummax() * 100
-    mdd = df['dd'].max()
     hpr = df['hpr'].iloc[-1]
-    return mdd, hpr
+    return hpr
 
 
-# In[20]:
+# In[23]:
 
 
 # 그래프 생성 함수
 def generate_plot(df, ticker):
     close_prices = df["close"]
     hpr = df["hpr"]
-    mdd = df["dd"]
 
     # 시계열 그래프 그리기
     fig, ax1 = plt.subplots(figsize=(10, 5))
@@ -139,21 +136,14 @@ def generate_plot(df, ticker):
 
     ax2 = ax1.twinx()
     ax2.plot(close_prices.index, hpr, label='hpr', marker='o', linestyle='--', color='tab:red')
-    ax2.set_ylabel('hpr (KRW)', color='tab:red')
+    ax2.set_ylabel('hpr', color='tab:red')
     ax2.tick_params('y', colors='tab:red')
     ax2.legend(loc='upper right')
-
-    ax3 = ax1.twinx()
-    ax3.plot(close_prices.index, mdd, label='mdd', marker='o', linestyle='-.', color='tab:green')
-    ax3.set_ylabel('mdd', color='tab:green')
-    ax3.spines['right'].set_position(('outward', 60))
-    ax3.tick_params('y', colors='tab:green')
-    ax3.legend(loc='lower right')
 
     return fig
 
 
-# In[21]:
+# In[24]:
 
 
 #fetch_data
@@ -163,7 +153,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[22]:
+# In[25]:
 
 
 def authenticate_google_sheets():
@@ -200,7 +190,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[23]:
+# In[26]:
 
 
 def get_bitcoin_price_difference():
@@ -229,7 +219,7 @@ def get_bitcoin_price_difference():
     return result
 
 
-# In[24]:
+# In[ ]:
 
 
 spreadsheet_id = "1CetVCZ2-iII39NUZj5AIFZiTYxX9Tw3nH2Ws7HR178M"
@@ -274,12 +264,12 @@ def main():
         df = ma5_above_and_range_above_strategy(df)
 
         # MDD, HPR 계산
-        mdd, hpr = calculate_metrics(df)
+        hpr = calculate_metrics(df)
 
         # 결과 출력
         st.write(f"Selected Coin: {selected_ticker}")
-        st.write(f"MDD (Maximum Drawdown): {mdd:.2f}%")
         st.write(f"HPR (Holding Period Return): {hpr:.2f}")
+        
         # 그래프 결과 출력
         fig = generate_plot(df, selected_ticker)
         st.pyplot(fig)
@@ -400,8 +390,8 @@ def main():
         print("일반인간지표(0:하락, 1:상승):",general_human_index_rounded)
         print("가중인간지표(0:하락, 1:상승):",perfect_human_index_rounded)
         
-        st.text(f"General Human Index (0: Bearish, 1: Bullish): {general_human_index_rounded}")
-        st.text(f"Perfect Human Index (0: Bearish, 1: Bullish): {perfect_human_index_rounded}")
+        st.text(f"General Human Index \n(0: Bearish, 1: Bullish): {general_human_index_rounded}")
+        st.text(f"Perfect Human Index \n(0: Bearish, 1: Bullish): {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
 if __name__ == '__main__':
     main()
