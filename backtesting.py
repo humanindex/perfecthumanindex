@@ -178,22 +178,22 @@ def authenticate_google_sheets():
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
+            # Refresh the credentials
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 "client_secret_998298439835-uv6ts5ta7agdj0fch4rtr6pf96su0mef.apps.googleusercontent.com.json", SCOPES
             )
             auth_url, _ = flow.authorization_url(prompt="consent")
-            
-            # Specify the browser to use (replace 'your_browser_command' with the appropriate command)
-            browser_command = 'chrome'
+
+            # Open the authorization URL in the default web browser
             webbrowser.open(auth_url, new=1, autoraise=True)
 
             # Get the authorization response from the user
             response_code = input("Enter the authorization code: ")
             creds = flow.fetch_token(code=response_code)
-            
-        # Save the credentials for the next run
+
+        # Save the refreshed or new credentials for the next run
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
