@@ -10,15 +10,21 @@ import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import gspread
-from google.oauth2 import service_account
 import os.path
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-import time
+
+
+# In[2]:
+
+
+# Set page configuration
+st.set_page_config(
+    page_title="HumanIndex",
+    page_icon=":rocket:",
+    layout="wide",
+)
 
 
 # In[2]:
@@ -175,7 +181,7 @@ def authenticate_google_sheets():
         # Save the credentials for the next run
         with open("token.json", "w") as token:
             token.write(creds.to_json())
-    return creds
+    return creds 
 
 
 # In[10]:
