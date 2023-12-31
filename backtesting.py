@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-import json
+
 
 import streamlit as st
 import pyupbit
@@ -10,11 +10,15 @@ import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import gspread
+from google.oauth2 import service_account
 import os.path
+from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from urllib.parse import urlparse, parse_qs
+from googleapiclient.errors import HttpError
+import time
 
 
 # In[2]:
@@ -162,38 +166,27 @@ def fetch_data(selected_ticker, start_date, end_date):
 
 
 def authenticate_google_sheets():
+
     SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     creds = None
-
+    # The file token.json stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-
+    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
-        st.markdown("### Authenticate with Google")
-        st.markdown("Click the link below to authenticate with Google:")
-
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "client_secret_998298439835-uv6ts5ta7agdj0fch4rtr6pf96su0mef.apps.googleusercontent.com.json",
-            scopes=SCOPES,
-            redirect_uri="https://perfecthumanindex.streamlit.app/"
-        )
-        auth_url, _ = flow.authorization_url(prompt='consent')
-        st.markdown(f"[Click here to authenticate with Google]({auth_url})")
-
-        # creds = flow.fetch_token(authorization_response=response)
-        response_url = st.text_input("https://perfecthumanindex.streamlit.app/")
-        parsed_url = urlparse(response_url)
-        code = parse_qs(parsed_url.query)['code'][0]
-        creds = flow.fetch_token(code=code)
-
-
-        # with open("token.json", "w") as token:
-        #     token.write(creds.to_json())
-        # JSON 형식으로 변환하여 파일에 저장
-        with open("token.json", "w") as token_file:
-            json.dump(creds, token_file)
-
-    return creds
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                "client_secret_998298439835-uv6ts5ta7agdj0fch4rtr6pf96su0mef.apps.googleusercontent.com.json", SCOPES
+            )
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open("token.json", "w") as token:
+            token.write(creds.to_json())
+    return creds 
 
 
 # In[10]:
