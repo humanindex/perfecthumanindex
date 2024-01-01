@@ -73,7 +73,7 @@ def bullish_or_bearish():
  
     # Button to trigger the action
     
-    button_clicked = st.button("Check Bullish or Bearish Right Now")
+    button_clicked = st.button("Crypto Up/Down?")
 
     if button_clicked:
         now = datetime.datetime.now()
@@ -82,14 +82,14 @@ def bullish_or_bearish():
         current_price = pyupbit.get_current_price("KRW-BTC")
 
         if (current_price > target_price) and (current_price > ma5):
-            st.text("Continue Trading")
-            st.text(f"ma5: {ma5}")
-            st.text(f"target_price: {target_price}")
-            st.text(f"current_price: {current_price}")
-            st.text(f"Click Time: {now}")
+            st.text("Up")
+            #st.text(f"ma5: {ma5}")
+            #st.text(f"target_price: {target_price}")
+            #st.text(f"current_price: {current_price}")
+            st.text(f"Predict Time: {now}")
         else:
-            st.text("Stop Trading")
-            st.text(f"Click Time: {now}")
+            st.text("Down")
+            st.text(f"Predict Time: {now}")
 
 
 # In[72]:
@@ -111,18 +111,18 @@ def ma5_above_and_range_above_strategy(df):
 # In[73]:
 
 
-# #HPR(기간수익률) 계산 함수
-# def calculate_metrics(df):
-#     df['hpr'] = df['ror'].cumprod()
-#     hpr = df['hpr'].iloc[-1]
-#     return hpr
+#HPR(기간수익률) 계산 함수
+def calculate_metrics(df):
+    df['hpr'] = df['ror'].cumprod()
+    hpr = df['hpr'].iloc[-1]
+    return hpr
 
 
 # In[74]:
 
 
-# 그래프 생성 함수
-def generate_plot(df, ticker):
+# 그래프 생성 함수(Price Only)
+def generate_plot1(df, ticker):
     close_prices = df["close"]
     #hpr = df["hpr"]
 
@@ -139,6 +139,31 @@ def generate_plot(df, ticker):
 #     ax2.set_ylabel('hpr', color='tab:red')
 #     ax2.tick_params('y', colors='tab:red')
 #     ax2.legend(loc='upper right')
+
+    return fig
+
+
+# In[ ]:
+
+
+# 그래프 생성 함수(Price and HPR)
+def generate_plot2(df, ticker):
+    close_prices = df["close"]
+    hpr = df["hpr"]
+
+    # 시계열 그래프 그리기
+    fig, ax1 = plt.subplots(figsize=(10, 5))
+    ax1.plot(close_prices.index, close_prices, label='Close Price', marker='o', linestyle='-')
+    ax1.set_xlabel('Date')
+    ax1.set_ylabel('Close Price (KRW)', color='tab:blue')
+    ax1.tick_params('y', colors='tab:blue')
+    ax1.legend(loc='upper left')
+
+    ax2 = ax1.twinx()
+    ax2.plot(close_prices.index, hpr, label='hpr', marker='o', linestyle='--', color='tab:red')
+    ax2.set_ylabel('hpr', color='tab:red')
+    ax2.tick_params('y', colors='tab:red')
+    ax2.legend(loc='upper right')
 
     return fig
 
@@ -264,14 +289,14 @@ def main():
         df = ma5_above_and_range_above_strategy(df)
 
         # MDD, HPR 계산
-        #hpr = calculate_metrics(df)
+        hpr = calculate_metrics(df)
 
         # 결과 출력
         st.write(f"Selected Coin: {selected_ticker}")
-        #st.write(f"HPR (Holding Period Return): {hpr:.2f}")
+        st.write(f"Profit Ratio: {hpr:.2f}")
         
         # 그래프 결과 출력
-        fig = generate_plot(df, selected_ticker)
+        fig = generate_plot1(df, selected_ticker)
         st.pyplot(fig)
         plt.close(fig)
         #bullish_or_bearish()
@@ -400,12 +425,48 @@ def main():
         st.text(f"General : {general_human_index_rounded}")
         st.text(f"Weighted: {perfect_human_index_rounded}")
         st.text(f"Number of Participants: {total_forecast_num}")
-        
+  
+
     # 탭 선택
     st.sidebar.title("AI Trading")
-    selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results"])
-        if selected_tab == "Introduction":
-            
+    selected_tab = st.sidebar.radio("what is AI with Crypto?", ["Introduction", "Backtest Results", "Predict Now"])
+    if selected_tab == "Introduction":
+        st.text("What is Ensemble?")
+        st.text("Ensemble modeling is a process where multiple diverse models are created to predict an outcome, either by using many different modeling algorithms or using different training data sets. The ensemble model then aggregates the prediction of each base model and results in once final prediction for the unseen data.")
+        # 로컬 파일 경로 사용 예제
+        image_path = "ensemble.png"
+        st.image(image_path, caption='Your Image Caption', use_column_width=True)
+        
+    elif selected_tab == "Backtest Results":
+        st.title("Backtest Results")
+        # 코인 선택
+        selected_ticker = st.selectbox("Select a cryptocurrency", tickers)
+        # 기간 설정
+        today = datetime.datetime.now().date()
+        default_start_date = today.replace(day=1)  # Set the default start date to the first day of the current month
+        start_date = st.date_input("Start Date", value=default_start_date)
+        end_date = today
+        # OHLCV 데이터 가져오기
+        df = fetch_data(selected_ticker, start_date, end_date)
+        # 전략 적용
+        df = ma5_above_and_range_above_strategy(df)
+        # HPR 계산
+        hpr = calculate_metrics(df)
+
+        # 결과 출력
+        st.write(f"Selected Coin: {selected_ticker}")
+        st.write(f"Profit(HPR): {hpr:.2f}")
+        
+        # 그래프 결과 출력
+        fig = generate_plot2(df, selected_ticker)
+        st.pyplot(fig)
+        plt.close(fig)
+
+    elif selected_tab == "Predict Now":
+        st.title("Predict Now")
+        bullish_or_bearish()
+        
+        
 if __name__ == '__main__':
     main()
 
