@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[67]:
+# In[1]:
 
 
 import streamlit as st
@@ -22,7 +22,7 @@ import time
 import webbrowser
 
 
-# In[68]:
+# In[2]:
 
 
 # Set page configuration
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 
-# In[69]:
+# In[3]:
 
 
 def get_target_price(ticker):
@@ -46,7 +46,7 @@ def get_target_price(ticker):
     return target
 
 
-# In[70]:
+# In[4]:
 
 
 def get_yesterday_ma5(ticker):
@@ -66,7 +66,7 @@ def get_yesterday_ma5(ticker):
     return yesterday_ma5
 
 
-# In[71]:
+# In[5]:
 
 
 def bullish_or_bearish():
@@ -92,7 +92,7 @@ def bullish_or_bearish():
             st.text(f"Predict Time: {now}")
 
 
-# In[72]:
+# In[6]:
 
 
 # Your trading strategy function
@@ -108,7 +108,7 @@ def ma5_above_and_range_above_strategy(df):
     return df  # Add this line to return the modified DataFrame
 
 
-# In[73]:
+# In[7]:
 
 
 #HPR(기간수익률) 계산 함수
@@ -118,7 +118,7 @@ def calculate_metrics(df):
     return hpr
 
 
-# In[74]:
+# In[8]:
 
 
 # 그래프 생성 함수(Price Only)
@@ -143,7 +143,7 @@ def generate_plot1(df, ticker):
     return fig
 
 
-# In[ ]:
+# In[9]:
 
 
 # 그래프 생성 함수(Price and HPR)
@@ -168,7 +168,7 @@ def generate_plot2(df, ticker):
     return fig
 
 
-# In[75]:
+# In[10]:
 
 
 #fetch_data
@@ -178,7 +178,7 @@ def fetch_data(selected_ticker, start_date, end_date):
     return df
 
 
-# In[76]:
+# In[11]:
 
 
 def authenticate_google_sheets():
@@ -215,7 +215,7 @@ def authenticate_google_sheets():
     return creds
 
 
-# In[77]:
+# In[12]:
 
 
 def get_bitcoin_price_difference():
